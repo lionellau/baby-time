@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Little Steps — A Parenting Journey</title>
+<meta name="description" content="A cozy simulation game for parents and parents-to-be: practice responding to a growing child from age 1 to 6, with tips from real early-childhood guidance.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E👶%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+<div id="app" class="app">
+
+  <!-- ══════════ TITLE SCREEN ══════════ -->
+  <section id="screen-title" class="screen screen-title" hidden>
+    <div class="title-sky">
+      <div class="cloud cloud-1"></div>
+      <div class="cloud cloud-2"></div>
+      <div class="cloud cloud-3"></div>
+      <div class="title-sun"></div>
+    </div>
+    <div class="title-content">
+      <div class="title-baby" id="title-baby" aria-hidden="true"></div>
+      <h1 class="game-logo">Little&nbsp;Steps</h1>
+      <p class="game-tagline">A parenting journey, one small moment at a time</p>
+      <nav class="title-menu" aria-label="Main menu">
+        <button class="btn btn-primary btn-big" id="btn-continue" hidden>▶ Continue</button>
+        <button class="btn btn-primary btn-big" id="btn-newgame">🌱 New Journey</button>
+        <button class="btn btn-soft btn-big" id="btn-slots">📂 Save Slots</button>
+        <button class="btn btn-soft btn-big" id="btn-howto">📖 How to Play</button>
+        <button class="btn btn-soft btn-big" id="btn-settings">⚙️ Settings</button>
+      </nav>
+      <p class="title-footnote">For parents, parents-to-be, and the curious.<br>
+      Inspired by real early-childhood guidance. Not medical advice. 💛</p>
+    </div>
+  </section>
+
+  <!-- ══════════ SAVE SLOTS ══════════ -->
+  <section id="screen-slots" class="screen screen-slots" hidden>
+    <div class="panel panel-narrow">
+      <h2 class="panel-title">Save Slots</h2>
+      <p class="panel-sub">Each slot holds one journey. Pick one to continue, or start fresh.</p>
+      <div id="slot-list" class="slot-list"></div>
+      <div class="panel-actions">
+        <button class="btn btn-soft" id="btn-slots-back">← Back</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ HOW TO PLAY ══════════ -->
+  <section id="screen-howto" class="screen screen-howto" hidden>
+    <div class="panel panel-narrow scrollable">
+      <h2 class="panel-title">How to Play</h2>
+      <div class="howto-body">
+        <div class="howto-item"><span class="howto-icon">🍼</span>
+          <div><strong>Live the little moments.</strong> Your child grows from age 1 to 6. Each day brings a real-life moment — a tantrum, a bedtime, a first step. Choose how to respond.</div></div>
+        <div class="howto-item"><span class="howto-icon">🌈</span>
+          <div><strong>Watch them grow.</strong> Your responses nurture <strong>❤️ Bond</strong>, <strong>💬 Language</strong>, <strong>🤸 Motor</strong> skills and <strong>🌈 Feelings</strong> (emotional skills). There are no fatal mistakes — children are resilient, and repair always matters more than perfection.</div></div>
+        <div class="howto-item"><span class="howto-icon">⚡</span>
+          <div><strong>Mind your own battery.</strong> Engaged parenting takes energy. When yours runs low, everything is harder — the game gently reminds you that caring for yourself <em>is</em> caring for your child.</div></div>
+        <div class="howto-item"><span class="howto-icon">🎲</span>
+          <div><strong>Every child is different.</strong> Each new game rolls a temperament — sunny, spirited, cautious, or sensitive. The same response can land differently with a different child. That's parenting!</div></div>
+        <div class="howto-item"><span class="howto-icon">🧸</span>
+          <div><strong>Play together.</strong> Each year includes a little play session — peekaboo, block towers, feeling faces — because play is how children learn.</div></div>
+        <div class="howto-item"><span class="howto-icon">📚</span>
+          <div><strong>Learn as you go.</strong> Every choice comes with a tip drawn from widely-shared early-childhood guidance (responsive caregiving, emotion coaching, reading together). It's a game, not a manual — real children write their own rules.</div></div>
+        <div class="howto-item"><span class="howto-icon">⌨️</span>
+          <div><strong>Controls:</strong> Click or tap buttons, or press <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> to choose and <kbd>Enter</kbd> to continue.</div></div>
+      </div>
+      <div class="panel-actions">
+        <button class="btn btn-primary" id="btn-howto-back">Got it!</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ SETUP (NEW GAME) ══════════ -->
+  <section id="screen-setup" class="screen screen-setup" hidden>
+    <div class="panel panel-narrow">
+      <h2 class="panel-title">A new little person!</h2>
+      <p class="panel-sub">Today is their first birthday. Tell us about them.</p>
+      <div class="setup-baby-preview" id="setup-baby-preview" aria-hidden="true"></div>
+      <form id="setup-form" autocomplete="off">
+        <label class="field-label" for="input-name">Child's name</label>
+        <div class="name-row">
+          <input type="text" id="input-name" class="text-input" maxlength="12" placeholder="e.g. Mio" required>
+          <button type="button" class="btn btn-soft btn-dice" id="btn-randname" title="Random name" aria-label="Random name">🎲</button>
+        </div>
+        <span class="field-label">Look</span>
+        <div class="swatch-row" id="skin-row" role="radiogroup" aria-label="Skin tone"></div>
+        <div class="swatch-row" id="hair-row" role="radiogroup" aria-label="Hair color"></div>
+        <div class="setup-note">🎲 Their <strong>temperament</strong> will be a surprise — you'll discover it as you get to know them, just like real life.</div>
+        <div class="panel-actions">
+          <button type="button" class="btn btn-soft" id="btn-setup-back">← Back</button>
+          <button type="submit" class="btn btn-primary" id="btn-setup-go">Begin the journey →</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ══════════ MAIN GAME ══════════ -->
+  <section id="screen-game" class="screen screen-game" hidden>
+    <header class="hud" aria-label="Status">
+      <div class="hud-left">
+        <div class="age-badge" id="hud-age">Age 1</div>
+        <div class="day-dots" id="hud-days" aria-label="Progress through this year"></div>
+      </div>
+      <div class="hud-stats" id="hud-stats"></div>
+      <div class="hud-right">
+        <button class="btn-icon" id="btn-album" title="Memory album" aria-label="Memory album">📔</button>
+        <button class="btn-icon" id="btn-game-settings" title="Settings" aria-label="Settings">⚙️</button>
+        <button class="btn-icon" id="btn-home" title="Save & exit to title" aria-label="Save and exit to title">🏠</button>
+      </div>
+    </header>
+
+    <div class="stage" id="stage">
+      <div class="scene" id="scene"></div>
+    </div>
+
+    <div class="card-area" id="card-area" aria-live="polite"></div>
+  </section>
+
+  <!-- ══════════ BIRTHDAY / AGE-UP ══════════ -->
+  <section id="screen-birthday" class="screen screen-birthday" hidden>
+    <div class="confetti-layer" id="confetti-layer" aria-hidden="true"></div>
+    <div class="panel panel-narrow scrollable" id="birthday-panel"></div>
+  </section>
+
+  <!-- ══════════ ALBUM ══════════ -->
+  <section id="screen-album" class="screen screen-album" hidden>
+    <div class="panel panel-wide scrollable">
+      <h2 class="panel-title">📔 Memory Album</h2>
+      <p class="panel-sub" id="album-sub"></p>
+      <div class="album-grid" id="album-grid"></div>
+      <div class="panel-actions">
+        <button class="btn btn-primary" id="btn-album-back">← Back</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ ENDING ══════════ -->
+  <section id="screen-ending" class="screen screen-ending" hidden>
+    <div class="panel panel-narrow scrollable" id="ending-panel"></div>
+  </section>
+
+  <!-- ══════════ SETTINGS MODAL ══════════ -->
+  <div class="modal-backdrop" id="modal-settings" hidden>
+    <div class="modal panel" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+      <h2 class="panel-title" id="settings-title">⚙️ Settings</h2>
+      <div class="settings-list">
+        <label class="setting-row">
+          <span class="setting-label">🔊 Sound</span>
+          <input type="checkbox" id="set-sound" class="toggle">
+        </label>
+        <label class="setting-row">
+          <span class="setting-label">🍃 Reduce motion</span>
+          <input type="checkbox" id="set-motion" class="toggle">
+        </label>
+        <label class="setting-row">
+          <span class="setting-label">🔍 Large text</span>
+          <input type="checkbox" id="set-text" class="toggle">
+        </label>
+      </div>
+      <div class="panel-actions">
+        <button class="btn btn-primary" id="btn-settings-close">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ CONFIRM MODAL ══════════ -->
+  <div class="modal-backdrop" id="modal-confirm" hidden>
+    <div class="modal panel" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+      <h2 class="panel-title" id="confirm-title">Are you sure?</h2>
+      <p class="panel-sub" id="confirm-text"></p>
+      <div class="panel-actions">
+        <button class="btn btn-soft" id="btn-confirm-no">Cancel</button>
+        <button class="btn btn-danger" id="btn-confirm-yes">Yes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+</div>
+
+<script src="js/audio.js"></script>
+<script src="js/data.js"></script>
+<script src="js/baby.js"></script>
+<script src="js/minigames.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>
