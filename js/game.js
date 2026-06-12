@@ -119,8 +119,12 @@
     const slots = loadSlots();
     const cont = $('#btn-continue');
     if (last !== null && slots[+last]) {
+      const saved = slots[+last];
       cont.hidden = false;
-      cont.innerHTML = `▶ Continue — <strong>${esc(slots[+last].name)}</strong>, age ${slots[+last].age}`;
+      cont.innerHTML = `
+        <span class="continue-label">▶ Continue</span>
+        <span class="continue-save"><strong>${esc(saved.name)}</strong>, age ${saved.age}</span>
+      `;
     } else cont.hidden = true;
     show('title');
   }

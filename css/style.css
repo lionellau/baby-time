@@ -96,7 +96,7 @@ button { font-family: inherit; }
 }
 .btn-danger:active { box-shadow: 0 2px 0 #A93834, var(--shadow-soft); }
 
-.btn-big { width: min(320px, 86vw); font-size: 1.15rem; }
+.btn-big { width: 320px; max-width: 86vw; font-size: 1.15rem; }
 
 .btn-icon {
   width: 48px; height: 48px;
@@ -209,7 +209,32 @@ button { font-family: inherit; }
   margin: 6px 0 26px;
   text-align: center;
 }
-.title-menu { display: flex; flex-direction: column; gap: 14px; align-items: center; }
+.title-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+  width: 320px;
+  max-width: 86vw;
+}
+#btn-continue {
+  flex-direction: column;
+  gap: 2px;
+  min-height: 72px;
+  line-height: 1.15;
+  white-space: normal;
+  text-align: center;
+}
+.continue-label,
+.continue-save {
+  display: block;
+  max-width: 100%;
+}
+.continue-label { font-size: 1.05rem; }
+.continue-save {
+  font-size: 1.15rem;
+  overflow-wrap: anywhere;
+}
 .title-footnote {
   margin-top: 26px;
   text-align: center;
@@ -963,7 +988,7 @@ html.reduce-motion *, html.reduce-motion *::before, html.reduce-motion *::after 
   .panel { padding: 22px 18px; }
   .scenario-card, .feedback-card, .minigame-card { padding: 16px; }
   .stage { min-height: 200px; }
-  .btn-big { width: 100%; }
+  .btn-big { width: 100%; max-width: 100%; }
   .screen-setup {
     justify-content: flex-start;
     padding-top: calc(12px + env(safe-area-inset-top));
